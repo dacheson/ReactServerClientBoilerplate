@@ -235,7 +235,47 @@ body {
     margin-right: 10px;
     background: #FFF;
   }
+
+  .handOfCards {
+    display: flex;
+  }
   
+  .card-outerBorder-message {
+    width: 10%;
+    height: 26vh;
+    border: 2px solid black;
+    margin: 2px;
+  }
+
+  .card-outerBorder-message-box {
+    font-weight: 600;
+    font-size: 17px;
+    top: 3vh;
+    position: relative;
+    left: 1vw;
+    height: 9%;
+    width: 9vw;
+  }
+
+  .card-bedlam-logo {
+    font-weight: bolder;
+    font-size: large;
+    height: 10%;
+    bottom: -16vh;
+    left: 2vw;
+    position: relative;
+  }
+
+  .card-quip{
+    background-color: black;
+    color: white;
+    font-style: italic;
+    position: relative;
+    font-size: x-small;
+    height: 5vh;
+    top: 16vh;
+  }
+
   .container-fluid {
     padding: 0px;
   }

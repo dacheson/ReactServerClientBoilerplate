@@ -76,10 +76,15 @@ function drawRandomGameCard() {
 }
 
 function addPlayer(userID) {
+  let cards = drawRandomGameCards(5);
   currentPlayers.push({
     userId: userID,
-    cards: [...drawRandomGameCards(5)]
+    cards: cards
   });
+  const json = { type: typesDef.USER_EVENT };
+  userActivity.push(`${userID} drew cards: ${cards}`);
+  json.data = { users, userActivity };
+  sendMessage(JSON.stringify(json));
   console.log(currentPlayers[currentPlayers.length-1]);
 }
 

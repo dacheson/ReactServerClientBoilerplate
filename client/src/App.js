@@ -121,15 +121,70 @@ current content of the editor to the server. */
     </div>
   )
 
+  renderCard = (message, quip) => (
+    <div className="card-outerBorder-message">
+        <div className="card-outerBorder-message-box">
+        {message}
+        </div>
+        <div className="card-bedlam-logo">
+            Bedlam
+        </div>
+        <div className="card-quip">
+          {quip}
+        </div>
+    </div>
+  )
+
+  renderHand = (cards) => {
+    return (
+      <div className="handOfPlayableCards">
+       {cards.forEach(card => {
+        return <div className="card"> {this.renderCard(card.message, card.quip) }</div>;
+      }) }
+      </div>
+    );
+  }
+
+  renderPlayableCards = () => {
+    let cards = [];
+    cards.push({
+      message: "A brain fart",
+      quip: "Luckily these don't smell...much."
+    });
+    cards.push({
+      message: "The detached loneliness of being a remote worker",
+      quip: "Or being the only one who doesn't work out of corporate headquarters."
+    });
+    cards.push({
+      message: "The mythical man month",
+      quip: "Lots of leaders like to have babies in one month by adding 8 women to the project."
+    });
+    cards.push({
+      message: "Complaining about stuff, only to find out that there’s already a Bedlam card for it",
+      quip: "Happened like six times so far. Is this the seventh?"
+    });
+    cards.push({
+      message: "Engineering politely thanking Legal, HR, Marketing or BizDev for their input",
+      quip: "Thanks for the 'feedback'."
+    });
+    return (
+      <React.Fragment>
+        { cards.map(card => {
+          { return this.renderCard(card.message, card.quip) }
+        })}
+        </React.Fragment>
+      );
+  }
+
   render() {
     const {
       username
     } = this.state;
     return (
       <React.Fragment>
-        <Navbar color="light" light>
-          <NavbarBrand href="/">Real-time document editor</NavbarBrand>
-        </Navbar>
+        <div className="handOfCards">
+          {this.renderPlayableCards() }
+        </div>
         <div className="container-fluid">
           {username ? this.showEditorSection() : this.showLoginSection()}
         </div>
