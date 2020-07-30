@@ -1,6 +1,7 @@
 const webSocketsServerPort = 8000;
 const webSocketServer = require('websocket').server;
 const http = require('http');
+const { stringify } = require('querystring');
 // Spinning the http server and the websocket server.
 const server = http.createServer();
 server.listen(webSocketsServerPort);
@@ -14,6 +15,11 @@ const getUniqueID = () => {
   return s4() + s4() + '-' + s4();
 };
 
+
+let currentPlayers = [];
+
+let availableCards = generateGameCards();
+
 // I'm maintaining all active connections in this object
 const clients = {};
 // I'm maintaining all active users in this object
@@ -22,6 +28,13 @@ const users = {};
 let editorContent = null;
 // User activity history.
 let userActivity = [];
+
+// Need an object to hold a
+let players = [];
+
+// bool to know if game loop should be running
+let gameActive = false;
+
 
 
 
@@ -37,6 +50,39 @@ const typesDef = {
   CONTENT_CHANGE: "contentchange"
 }
 
+function generateGameCards() {
+  let allCards = [];
+  for(let i=0; i<150; i++) {
+    allCards.push(i);
+  }
+  return allCards;
+}
+
+function drawRandomGameCards(numOfCards) {
+  let returnedCards = [];
+  for(let i=0; i<numOfCards; i++) {
+    returnedCards[i] = drawRandomGameCard();
+  }
+  return returnedCards;
+}
+
+function drawRandomGameCard() {
+  let randomCard = Math.round(Math.random() * availableCards.length-2);
+
+  //console.log("Random Card:" + [randomCard]);
+  //console.log("Value at that spot:" + availableCards[randomCard]);
+  availableCards.splice(randomCard, 1);
+  return randomCard;
+}
+
+function addPlayer(userID) {
+  currentPlayers.push({
+    userId: userID,
+    cards: [...drawRandomGameCards(5)]
+  });
+  console.log(currentPlayers[currentPlayers.length-1]);
+}
+
 wsServer.on('request', function(request) {
   var userID = getUniqueID();
   console.log((new Date()) + ' Recieved a new connection from origin ' + request.origin + '.');
@@ -44,6 +90,10 @@ wsServer.on('request', function(request) {
   const connection = request.accept(null, request.origin);
   clients[userID] = connection;
   console.log('connected: ' + userID + ' in ' + Object.getOwnPropertyNames(clients));
+
+  addPlayer(userID);
+  checkStartGame();
+
   connection.on('message', function(message) {
     if (message.type === 'utf8') {
       const dataFromClient = JSON.parse(message.utf8Data);
@@ -59,6 +109,7 @@ wsServer.on('request', function(request) {
       sendMessage(JSON.stringify(json));
     }
   });
+
   // user disconnected
   connection.on('close', function(connection) {
     console.log((new Date()) + " Peer " + userID + " disconnected.");
@@ -69,4 +120,31 @@ wsServer.on('request', function(request) {
     delete users[userID];
     sendMessage(JSON.stringify(json));
   });
+
+  function sendInfo(userId) {
+    const json = { type: typesDef.USER_EVENT };
+    userActivity.push(`${users[userId].username} will be picking the winner this round!`);
+    json.data = { users, userActivity };
+    delete clients[userID];
+    delete users[userID];
+    sendMessage(JSON.stringify(json));
+  }
+
+  
+
+function checkStartGame() {
+  if(!gameActive) {
+    if(currentPlayers.length > 2) {
+      gameActive = true;
+      startTurn();
+    }
+  }
+}
+
+function startTurn() {
+  // pick king and send messages informing everyone
+  let kingUserId = currentPlayers[Math.round(Math.random() * currentPlayers.length)].userId;
+  console.log(kingUserId);
+  sendInfo(kingUserId);
+}
 });

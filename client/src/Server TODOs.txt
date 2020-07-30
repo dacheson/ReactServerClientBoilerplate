@@ -1,0 +1,19 @@
+Server TODOs
+1. loginName, append 5digit number
+
+2. createGame, returns url with random number
+    a. opens a socket, generates a number and returns
+    b. starts game loop
+    c.
+
+3. joinGame, responds with selectedCards and currentWinnerChooser
+
+4. GAME loop
+    a. put all players into an array
+    b. pick one randomly
+    c. mark as winner picker
+    d. send message to them all on socket informing who is choosing
+    e. 
+    f.
+    g.
+5. 
