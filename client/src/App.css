@@ -212,7 +212,7 @@ body {
   .body-editor {
     outline: none;
     background: #fff;
-    height: 100vh;
+    height: 65vh;
     padding: 20px;
     border: 1px solid #ccc;
   }
@@ -296,7 +296,7 @@ body {
     background: #FFF;
     min-width: 300px;
     margin: 80px 0px 90px 15px;
-    height: 100vh;
+    height: 61vh;
     border: 1px solid #ccc;
   }
   

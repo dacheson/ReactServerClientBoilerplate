@@ -96,8 +96,6 @@ wsServer.on('request', function(request) {
   clients[userID] = connection;
   console.log('connected: ' + userID + ' in ' + Object.getOwnPropertyNames(clients));
 
-  addPlayer(userID);
-  checkStartGame();
 
   connection.on('message', function(message) {
     if (message.type === 'utf8') {
@@ -107,6 +105,8 @@ wsServer.on('request', function(request) {
         users[userID] = dataFromClient;
         userActivity.push(`${dataFromClient.username} joined to edit the document`);
         json.data = { users, userActivity };
+        addPlayer(userID);
+        checkStartGame();      
       } else if (dataFromClient.type === typesDef.CONTENT_CHANGE) {
         editorContent = dataFromClient.content;
         json.data = { editorContent, userActivity };

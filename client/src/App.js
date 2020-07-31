@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 import Identicon from 'react-identicons';
 import {
-  Navbar,
-  NavbarBrand,
   UncontrolledTooltip
 } from 'reactstrap';
 import Editor from 'react-medium-editor';
 import 'medium-editor/dist/css/medium-editor.css';
 import 'medium-editor/dist/css/themes/default.css';
 import './App.css';
+import { BedlamCards } from './BedlamCards';
 
 const client = new W3CWebSocket('ws://127.0.0.1:8000');
 const contentDefaultMessage = "Start writing your document here";
@@ -77,10 +76,10 @@ current content of the editor to the server. */
         <div className="account__card">
           <div className="account__profile">
             <Identicon className="account__avatar" size={64} string="randomness" />
-            <p className="account__name">Hello, user!</p>
-            <p className="account__sub">Join to edit the document</p>
+            <p className="account__name">Hello cog in machine!</p>
+            <p className="account__sub">Join the Bedlam</p>
           </div>
-          <input name="username" ref={(input) => { this.username = input; }} className="form-control" />
+          <input defaultValue="Your name here" name="username" ref={(input) => { this.username = input; }} className="form-control" />
           <button type="button" onClick={() => this.logInUser()} className="btn btn-primary account__btn">Join</button>
         </div>
       </div>
@@ -182,12 +181,21 @@ current content of the editor to the server. */
     } = this.state;
     return (
       <React.Fragment>
-        <div className="handOfCards">
-          {this.renderPlayableCards() }
-        </div>
         <div className="container-fluid">
-          {username ? this.showEditorSection() : this.showLoginSection()}
+          {username ? this.renderGameAndChat() : this.showLoginSection()}
         </div>
+      </React.Fragment>
+    );
+  }
+
+  renderGameAndChat() {
+    return (
+      <React.Fragment>
+      <div className="handOfCards">
+      { this.renderCard(BedlamCards[0].message, BedlamCards[0].quip) }
+      { this.renderPlayableCards() }
+      </div>
+      { this.showEditorSection() }
       </React.Fragment>
     );
   }
