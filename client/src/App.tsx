@@ -24,6 +24,9 @@ export interface IAppState {
 
   /** List of the list of activity notes for the user */
   readonly userActivity: string[];
+  
+  /** username of the current user */
+  readonly userNameTextBoxValue: string;
 
   /** username of the current user */
   readonly userName: string;
@@ -38,19 +41,10 @@ class App extends Component<IAppProps, IAppState> {
     this.state = {
       currentUsers: [],
       userActivity: [],
+      userNameTextBoxValue: "",
       userName: "",
       text: "",
     };
-  }
-
-  public logInUser(): void {
-    const username = this.state.userName;
-    client.send(
-      JSON.stringify({
-        username,
-        type: "userevent",
-      })
-    );
   }
 
   /* When content changes, we send the
@@ -102,7 +96,7 @@ current content of the editor to the server. */
             <input
               name="username"
               type="text"
-              value={this.state.userName}
+              value={this.state.userNameTextBoxValue}
               onChange={(e) => this.handleUserNameChange(e)}
               className="form-control"
             />
@@ -119,10 +113,23 @@ current content of the editor to the server. */
     );
   }
 
+  public logInUser(): void {
+    const username = this.state.userNameTextBoxValue;
+    if(username) {
+      this.setState({userName: username});
+      client.send(
+        JSON.stringify({
+          username,
+          type: "userevent",
+        })
+      );
+    }
+  }
+
   public handleUserNameChange(e: any) {
     let name = e.target.value;
     if (name.trim()) {
-      this.setState({ userName: name });
+      this.setState({ userNameTextBoxValue: name });
     }
   }
 
