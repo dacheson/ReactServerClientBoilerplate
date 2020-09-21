@@ -77,8 +77,8 @@ current content of the editor to the server. */
         <div className="account__card">
           <div className="account__profile">
             <Identicon className="account__avatar" size={64} string="randomness" />
-            <p className="account__name">Hello, user!</p>
-            <p className="account__sub">Join to edit the document</p>
+            <p className="account__name">Welcome player!</p>
+            <p className="account__sub">Enter your name to play</p>
           </div>
           <input name="username" ref={(input) => { this.username = input; }} className="form-control" />
           <button type="button" onClick={() => this.logInUser()} className="btn btn-primary account__btn">Join</button>
@@ -128,7 +128,7 @@ current content of the editor to the server. */
     return (
       <React.Fragment>
         <Navbar color="light" light>
-          <NavbarBrand href="/">Real-time document editor</NavbarBrand>
+          <NavbarBrand href="/">Poker Client Stage 1: Game Management</NavbarBrand>
         </Navbar>
         <div className="container-fluid">
           {username ? this.showEditorSection() : this.showLoginSection()}
