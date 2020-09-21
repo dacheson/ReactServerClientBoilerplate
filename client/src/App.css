@@ -212,7 +212,7 @@ body {
   .body-editor {
     outline: none;
     background: #fff;
-    height: 100vh;
+    height: 10vh;
     padding: 20px;
     border: 1px solid #ccc;
   }
