@@ -100,20 +100,18 @@ class App extends Component<IAppProps, IAppState> {
           </NavbarBrand>
         </Navbar>
         <div className="container-fluid">
-          {this.state.userName ? this.renderEditor() : this.renderLogin() }
+          {this.renderLoginOrEditor() }
         </div>
       </React.Fragment>
     );
     }
 
-  public renderLogin() {
-    return (
-      <LoginDialog logIn={this.logInUser} />
-    );
-  }
-
-  public renderEditor() {
-    return (<EditorSection onEditorStateChange={this.onEditorStateChange} currentUsers={this.state.currentUsers} text={this.state.text} userActivity={this.state.userActivity} />)
+  public renderLoginOrEditor() {
+    if (this.state.userName) {
+      return (<EditorSection onEditorStateChange={this.onEditorStateChange} currentUsers={this.state.currentUsers} text={this.state.text} userActivity={this.state.userActivity} />)
+    } else {
+      return (<LoginDialog logIn={this.logInUser} />);
+    }
   }
 }
 

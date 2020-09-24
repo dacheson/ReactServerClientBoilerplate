@@ -1,8 +1,8 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { UncontrolledTooltip } from "reactstrap";
 import Editor  from "react-medium-editor";
 import { contentDefaultMessage, User } from "../App";
+import PokerGameLobby from "./PokerGameLobby";
 
 export interface IEditorSectionProps {
   readonly onEditorStateChange: (evt: any) => void;
@@ -47,6 +47,9 @@ export default observer(function EditorSection(props: IEditorSectionProps) {
               <li key={`activity-${index}`}>{activity}</li>
             ))}
           </ul>
+        </div>
+        <div>
+          <PokerGameLobby/>
         </div>
       </div>
     );
