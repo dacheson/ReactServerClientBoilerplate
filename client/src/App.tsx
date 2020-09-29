@@ -6,6 +6,8 @@ import "medium-editor/dist/css/themes/default.css";
 import "./App.css";
 import LoginDialog from "./Controls/LoginDialog";
 import PokerGameLobby from "./Controls/PokerGameLobby";
+import JackFruit from "./Controls/JackFruit/JackFruit";
+import { BoardTestSpace } from "./Controls/BoardTestSpace";
 
 export const contentDefaultMessage = "Start writing your document here";
 export type User = {
@@ -98,7 +100,7 @@ class App extends Component<IAppProps, IAppState> {
       <PokerGameLobby/>
       </div>)
     } else {
-      return (<LoginDialog logIn={this.logInUser} />);
+      return (<BoardTestSpace/>); //<JackFruit/>); // <LoginDialog logIn={this.logInUser} />);
     }
   }
 }
