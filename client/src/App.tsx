@@ -1,15 +1,12 @@
 import React, { Component } from "react";
-import { w3cwebsocket as W3CWebSocket } from "websocket";
 import { Navbar, NavbarBrand } from "reactstrap";
 import { observer } from "mobx-react";
 import "medium-editor/dist/css/medium-editor.css";
 import "medium-editor/dist/css/themes/default.css";
 import "./App.css";
 import LoginDialog from "./Controls/LoginDialog";
-import EditorSection from "./Controls/EditorSection";
 import PokerGameLobby from "./Controls/PokerGameLobby";
 
-const client = new W3CWebSocket("ws://127.0.0.1:8000");
 export const contentDefaultMessage = "Start writing your document here";
 export type User = {
   userName: string;
@@ -45,38 +42,25 @@ class App extends Component<IAppProps, IAppState> {
   }
 
   componentWillMount() {
-    client.onopen = () => {
-      console.log("WebSocket Client Connected");
-    };
-    client.onmessage = (message: any) => {
-      const dataFromServer = JSON.parse(message.data);
-      const stateToChange: any = {};
-      if (dataFromServer.type === "userevent") {
-        stateToChange.currentUsers = Object.values(dataFromServer.data.users);
-      } else if (dataFromServer.type === "contentchange") {
-        stateToChange.text =
-          dataFromServer.data.editorContent || contentDefaultMessage;
-      }
-      stateToChange.userActivity = dataFromServer.data.userActivity;
-      this.setState({
-        ...stateToChange,
-      });
-    };
+
   }
 
   // Callback to take a username and send it to websocket
   public logInUser = (userName: string) => {
+    // Call Action which calls module?
+    // make user store
+
     const username = userName;
     if (username) {
       this.setState({ userName: username });
-      client.send(
-        JSON.stringify({
-          username,
-          type: "userevent",
-        })
-      );
+      // client.send(
+      //   JSON.stringify({
+      //     username,
+      //     type: "userevent",
+      //   })
+      // );
     }
-  };
+  };  
 
   /* When content changes, we send the
     current content of the editor to the server. */
@@ -87,7 +71,7 @@ class App extends Component<IAppProps, IAppState> {
       content: text,
     });
     console.log(res);
-    client.send(res);
+    //client.send(res);
   };
 
   // useState hook const { userName } = this.state;
