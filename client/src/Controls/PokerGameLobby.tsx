@@ -11,7 +11,7 @@ export interface IGameLobbyState {
 
 export default observer(function PokerGameLobby() {
     return (
-        <div className="App">
+        <div className="PokerGameLobby">
           <h1>
           <span role="img" aria-label="fourLeafClover">🍀</span>Welcome to Luckys Poker Room<span role="img" aria-label="fourLeafClover">🍀</span>
           </h1>

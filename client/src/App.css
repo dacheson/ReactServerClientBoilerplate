@@ -5,6 +5,17 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  .PokerGameLobby{
+    top: 10vh;
+    position: relative;
+    text-align: center;
+  }
+  
+
+  .activeGameLobbyTable{
+    margin-left: 40vw;
+  }
   
   .account {
        height: 100vh;

@@ -7,6 +7,7 @@ import "medium-editor/dist/css/themes/default.css";
 import "./App.css";
 import LoginDialog from "./Controls/LoginDialog";
 import EditorSection from "./Controls/EditorSection";
+import PokerGameLobby from "./Controls/PokerGameLobby";
 
 const client = new W3CWebSocket("ws://127.0.0.1:8000");
 export const contentDefaultMessage = "Start writing your document here";
@@ -108,7 +109,10 @@ class App extends Component<IAppProps, IAppState> {
 
   public renderLoginOrEditor() {
     if (this.state.userName) {
-      return (<EditorSection onEditorStateChange={this.onEditorStateChange} currentUsers={this.state.currentUsers} text={this.state.text} userActivity={this.state.userActivity} />)
+      return (
+      <div>
+      <PokerGameLobby/>
+      </div>)
     } else {
       return (<LoginDialog logIn={this.logInUser} />);
     }
